@@ -5,13 +5,7 @@ import { useAuth } from "../../context/AuthContext";
 import "./style.css";
 
 const Home = () => {
-    const { user, setUser, setIsAuthenticated } = useAuth();
-
-    const handleLogout = () => {
-        setIsAuthenticated(false);
-        setUser(null);
-        window.location.href = "http://localhost:8080/logout";
-    }
+    const { user, logout } = useAuth();
 
     return (
         <div className="dash-wrapper">
@@ -20,18 +14,10 @@ const Home = () => {
                     <div className="dash-logo-sq"> S </div>
                     <span> App Manager </span>
                 </div>
-                
-                <nav className="dash-nav">
-                    <a href="#" className="dash-nav-link active">
-                        <span> 📊 </span> Dashboard
-                    </a>
 
+                <nav className="dash-nav">
                     <a href="#" className="dash-nav-link">
                         <span> 🔑 </span> Credenciais
-                    </a>
-
-                    <a href="#" className="dash-nav-link">
-                        <span> 🛡️ </span> Segurança
                     </a>
                 </nav>
 
@@ -50,7 +36,7 @@ const Home = () => {
                         <p> Dados recuperados via OAuth 2.0 </p>
                     </div>
 
-                    <button onClick={handleLogout} className="dash-btn-logout">
+                    <button onClick={logout} className="dash-btn-logout">
                         Sair
                     </button>
                 </header>
@@ -59,7 +45,7 @@ const Home = () => {
                     <section className="dash-card dash-profile-hero">
                         <div className="dash-hero-content">
                             <div className="dash-avatar-container">
-                                <img src={ user?.urlPicture } alt="User"/>
+                                <img src={user?.urlPicture} alt="User" />
                             </div>
 
                             <div className="dash-hero-text">
@@ -73,12 +59,15 @@ const Home = () => {
                     <div className="dash-info-row">
                         <article className="dash-card dash-info-box">
                             <label> Último Login </label>
-                            <strong> 28 de Março, 2026 </strong>
+                            <strong> { user?.lastDateLogin } </strong>
                         </article>
 
                         <article className="dash-card dash-info-box">
                             <label> Provedor de Login </label>
-                            <strong className="provider-google"> { user?.providerName?.toUpperCase() || "N/A" } </strong>
+
+                            <strong className="provider-google"> 
+                                { user?.providerName?.toUpperCase() || "N/A" } 
+                            </strong>
                         </article>
                     </div>
 
@@ -88,7 +77,7 @@ const Home = () => {
                         <div className="dash-scopes">
                             {user?.scopes.map((scope, index) => (
                                 <span key={index} className="dash-scope-pill">
-                                    {scope}
+                                    { scope }
                                 </span>
                             ))}
                         </div>

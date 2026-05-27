@@ -4,9 +4,7 @@ const AuthContext = createContext({
     isAuthenticated: false,
     loading: false,
     user: null,
-    setIsAuthenticated: () => {},
-    setLoading: () => {},
-    setUser: () => {}
+    logout: () => {}
 })
 
 export const useAuth = () => useContext(AuthContext);
@@ -32,15 +30,21 @@ export const AuthProvider = ({ children }) => {
                 setIsAuthenticated(true);
             })
             .catch((e) => {
-                console.log(e.message);
+                throw new Error(e);
             })
             .finally(() => {
                 setLoading(false);
             });
     }
 
+    const logout = () => {
+        setIsAuthenticated(false);
+        setUser(null);
+        window.location.href = "http://localhost:8080/logout";
+    }
+
     return (
-        <AuthContext.Provider value={{ isAuthenticated, loading, user, setIsAuthenticated, setLoading, setUser }}>
+        <AuthContext.Provider value={{ isAuthenticated, loading, user, logout }}>
             { children }
         </AuthContext.Provider>
     )
