@@ -17,6 +17,7 @@ public class AuthSuccessResponse implements Serializable {
 	private String urlPicture;
 	private String token;
 	private String providerName;
+	private String lastDateLogin;
 	private Collection<String> scopes;
 	private Collection<String> roles;
 }

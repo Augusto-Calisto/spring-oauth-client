@@ -1,5 +1,6 @@
 package br.com.tech.entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -47,14 +48,19 @@ public class User {
     )
 	private List<Role> roles;
 	
+	@Column
+	private LocalDateTime lastLoginDateTime;
+	
+	
 	public User() {}
 
-	public User(String id, String name, String email, String registrationId, String sub, List<Role> roles) {
+	public User(String id, String name, String email, String registrationId, String sub, List<Role> roles, LocalDateTime lastLoginDateTime) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.registrationId = registrationId;
 		this.sub = sub;
 		this.roles = roles;
+		this.lastLoginDateTime = lastLoginDateTime;
 	}
 }
